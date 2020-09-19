@@ -1,8 +1,8 @@
 package it.dpedone.scpdemo.service;
 
 import it.davidepedone.scp.service.CursorPaginationService;
-import it.dpedone.scpdemo.entities.Post;
-import it.dpedone.scpdemo.utils.PostSearchFilter;
+import it.dpedone.scpdemo.entities.Tweet;
+import it.dpedone.scpdemo.utils.TweetSearchFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,14 +19,14 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
  */
 @Service
 @Slf4j
-public class PostPaginationService extends CursorPaginationService<Post, PostSearchFilter> {
+public class TweetPaginationService extends CursorPaginationService<Tweet, TweetSearchFilter> {
 
-	public PostPaginationService(MongoOperations mongoOperations) {
-		super(mongoOperations, List.of("createdAt", "author"), Post.class);
+	public TweetPaginationService(MongoOperations mongoOperations) {
+		super(mongoOperations, List.of("createdAt", "author"), Tweet.class);
 	}
 
 	@Override
-	public void configSearchQuery(Query query, PostSearchFilter filter, Principal principal) {
+	public void configSearchQuery(Query query, TweetSearchFilter filter, Principal principal) {
 		Optional.ofNullable(filter.getAuthor()).ifPresent(a -> {
 			query.addCriteria(where("author").is(a));
 		});
